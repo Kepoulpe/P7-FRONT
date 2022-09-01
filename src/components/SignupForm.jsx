@@ -17,7 +17,7 @@ function SignupForm() {
                 }
         }
         return (
-                <section>
+                <section id='signup-form'>
                                 <form onSubmit={handleSubmit(onSubmit)} className='signup-form'>
                                         <div className="flex flex-col">
                                                 <input

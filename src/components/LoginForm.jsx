@@ -15,7 +15,7 @@ function LoginForm() {
                 }
         }
         return (
-                <section>
+                <section id='login-form'>
                                 <form onSubmit={handleSubmit(onSubmit)} className='form'>
                                         <div>
                                                 <input
