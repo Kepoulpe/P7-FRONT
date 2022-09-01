@@ -1,0 +1,14 @@
+.gpm-switch {
+    display: flex;
+    width: 400px;
+    justify-content: space-around;
+}
+.gpm-switch-login{
+    background-color: white;
+    cursor: pointer;
+}
+
+.gpm-switch-signup{
+    background-color: white;
+    cursor: pointer;
+}

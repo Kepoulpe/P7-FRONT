@@ -1,0 +1,37 @@
+ .form {
+     display: flex;
+     flex-direction: column;
+     overflow: hidden;
+     background-color: white;
+     padding: 40px 30px 30px 30px;
+     border-radius: 10px;
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     width: 400px;
+     transform: translate(-50%, -50%);
+     box-shadow: 8px 8px 2px 1px #FFD7D7;
+ }
+ input {
+    display: block;
+    border-radius: 5px;
+    font-size: 16px;
+    background: rgb(236, 235, 235);
+    width: 100%;
+    border: 0;
+    padding: 10px 10px;
+    margin: 15px -10px;
+ }
+ button {
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+    width: 150px;
+    border: 0;
+    padding: 10px 0;
+    margin-top: 10px;
+    margin-left: -5px;
+    border-radius: 5px;
+    background-color: #FD2D01;
+ }
