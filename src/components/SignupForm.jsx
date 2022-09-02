@@ -8,12 +8,18 @@ import styles from '../styles/SignupForm.css';
 
 function SignupForm() {
         const { register, handleSubmit, watch, formState: { errors } } = useForm();
+        const [errorMessage, setErrorMessage] = useState(null)
+        const [requestSending, setrequestSending] = useState(false)
+        
+
         async function onSubmit(data) {
                 try {
+                        setrequestSending(true)
+                        setErrorMessage(null)
                         const user = await createUser(data.userName, data.email, data.password)
                 } catch (error) {
+                        setErrorMessage(error.msg)
                         console.error(error);
-                        return error
                 }
         }
         return (
@@ -45,6 +51,8 @@ function SignupForm() {
                                         </div>
                                         <button>Créer mon compte</button>
                                 </form>
+                                {(errorMessage) && <div><p>{errorMessage}</p></div>}
+
                 </section>
         )
 }

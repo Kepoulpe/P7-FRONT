@@ -8,7 +8,7 @@ function LoginForm() {
         const { register, handleSubmit, watch, formState: { errors } } = useForm();
         async function onSubmit(data) {
                 try {
-                        const user = await loginUser(data.userName, data.email, data.password)
+                        const user = await loginUser(data.email, data.password)
                 } catch (error) {
                         console.error(error);
                         return error
