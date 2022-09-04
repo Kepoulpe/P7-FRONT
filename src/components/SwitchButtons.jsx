@@ -1,4 +1,6 @@
-import styles from '../styles/SwitchButtons.css';
+import '../styles/SwitchButtons.css';
+
+import React from 'react';
 
 
 function loginClick() {

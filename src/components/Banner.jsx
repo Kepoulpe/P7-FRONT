@@ -1,5 +1,8 @@
-import '../styles/Banner.css'
-import logo from '../assets/icon-left-font-monochrome-white.png'
+import '../styles/Banner.css';
+import logo from '../assets/icon-left-font-monochrome-white.png';
+
+import React from 'react';
+
 
 function Banner() {
     return (
@@ -8,4 +11,5 @@ function Banner() {
         </div>
     )
 };
+
 export default Banner;

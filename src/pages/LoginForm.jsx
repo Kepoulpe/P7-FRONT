@@ -1,38 +1,25 @@
-import createUser from '../API/createUser';
-
+import React from 'react';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form'
-import styles from '../styles/SignupForm.css';
+import { useForm } from 'react-hook-form';
+import { Navigate } from 'react-router-dom';
 
+import '../styles/LoginForm.css';
+import loginUser from '../API/loginUser';
 
-
-function SignupForm() {
+function LoginForm(props) {
+        const {isAuthed} = props;
         const { register, handleSubmit, watch, formState: { errors } } = useForm();
-        const [errorMessage, setErrorMessage] = useState(null)
-        const [requestSending, setrequestSending] = useState(false)
-        
-
         async function onSubmit(data) {
                 try {
-                        setrequestSending(true)
-                        setErrorMessage(null)
-                        const user = await createUser(data.userName, data.email, data.password)
+                        const user = await loginUser(data.email, data.password)
                 } catch (error) {
-                        setErrorMessage(error.msg)
                         console.error(error);
+                        return error
                 }
         }
-        return (
-                <section id='signup-form'>
-                                <form onSubmit={handleSubmit(onSubmit)} className='signup-form'>
-                                        <div className="flex flex-col">
-                                                <input
-                                                        placeholder="Nom d'utilisateur"
-                                                        type="text"
-                                                        autoComplete="on"
-                                                        {...register("userName", { required: true })} />
-                                                {errors.userName && <p className="alert-msg">Le nom d'utilisateur doit être renseigné !</p>}
-                                        </div>
+        return !isAuthed ? (
+                <section id='login-form'>
+                                <form onSubmit={handleSubmit(onSubmit)} className='form'>
                                         <div>
                                                 <input
                                                         placeholder="Email"
@@ -49,13 +36,11 @@ function SignupForm() {
                                                         {...register("password", { required: true })} />
                                                 {errors.password && <p className="alert-msg">Un mot de passe doit être renseigné !</p>}
                                         </div>
-                                        <button>Créer mon compte</button>
+                                        <button>Connexion</button>
                                 </form>
-                                {(errorMessage) && <div><p>{errorMessage}</p></div>}
-
                 </section>
-        )
-}
+        ): (<Navigate replace to={"/"}/>)
 
+};
 
-export default SignupForm;
+export default LoginForm;
