@@ -8,14 +8,17 @@ import SignupForm from './pages/SignupForm';
 import Home from './pages/Home';
 import CreateNewPost from './pages/CreateNewPost';
 import loginUser from './API/loginUser';
+import createNewPostAPI from './API/createNewPostAPI';
 
 function App() {
 
   const [isAuthed, setIsAuthed] = useState(false);
+  const [postsData, setPostsData] = useState([]);
+  const [APIError, setAPIError] = useState(false);
 
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
     let isAuthedEffect = true;
+    const jwt = localStorage.getItem("jwt");
     const checkJWT = async () => {
       const APICall = await fetch(`http://localhost:3001/api/auth`, {
         method: "GET",
@@ -35,13 +38,37 @@ function App() {
     return () => isAuthedEffect = false;
   }, []);
 
+  useEffect(() => {
+    let isAuthedEffect = true;
+    const jwt = localStorage.getItem("jwt");
+    const fetchPosts = async () => {
+        try {
+            const response = await fetch('http://localhost:3001/api/posts', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + jwt
+                },
+            });
+            const res = await response.json();
+            setPostsData(res.data);
+        } catch (error) {
+            console.log(error);
+            setAPIError(true);
+        }
+    }
+    if (isAuthed) {
+      fetchPosts();
+    }
+    return () => isAuthedEffect = false;
+  }, [isAuthed]); // this useEffect hook will only be executed when `isAuthed` state variable changes
+
   async function login(email, password) {
     try {
-      const user = await loginUser(email, password);
+      await loginUser(email, password);
       setIsAuthed(true);
     } catch (error) {
       console.error(error);
-      return error;
     }
   }
 
@@ -52,9 +79,18 @@ function App() {
         setIsAuthed(false);
     } catch (error) {
         console.log(error);
-        return
     }
   };
+
+  async function createNewPost(content, image) {
+    try {
+      const newPostResponse = await createNewPostAPI(content, image);
+      // TODO make sure its sorted chronologically in descending order
+      setPostsData([...postsData, newPostResponse.data]);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div>
@@ -63,10 +99,10 @@ function App() {
       <div className='gpm-form'>
         <Routes>
           {/* TODO main view should only be accessible when authenticated */}
-          <Route path="/" element={<Home isAuthed={isAuthed}/>} />
+          <Route path="/" element={<Home isAuthed={isAuthed} postsData={postsData}/>} />
           <Route path="login" element={<LoginForm isAuthed={isAuthed} login={login}/>} />
           <Route path="signup" element={<SignupForm isAuthed={isAuthed}/>} />
-          <Route path="new-post" element={<CreateNewPost isAuthed={isAuthed}/>} />
+          <Route path="new-post" element={<CreateNewPost isAuthed={isAuthed} createNewPost={createNewPost}/>} />
           {/* TODO 404 */}
         </Routes>
         {/* <LoginForm />

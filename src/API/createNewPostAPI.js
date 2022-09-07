@@ -5,7 +5,7 @@
  * @param {File} image image file attach to the post
  * @returns 
  */
-export default async function createNewPost(content, image) {
+export default async function createNewPostAPI(content, image) {
     try {
         const jwt = localStorage.getItem('jwt');
         const userId = localStorage.getItem('userId')
