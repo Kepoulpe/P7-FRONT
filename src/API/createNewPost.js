@@ -5,35 +5,43 @@
  * @param {File} image image file attach to the post
  * @returns 
  */
- export default async function createNewPost (content, image) {
-    try { 
-        let response= [];
+export default async function createNewPost(content, image) {
+    try {
+        const jwt = localStorage.getItem('jwt');
+        const userId = localStorage.getItem('userId')
         // make the API call with image not empty
-        if (image != "unedefined") {
-            const response = await fetch('http://localhost:3001/api/auth/posts', {
+        if (image.length > 0) {
+            const APICall = await fetch('http://localhost:3001/api/posts', {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + jwt
                 },
                 body: JSON.stringify({
+                    userId: userId,
                     content: content,
                     imageUrl: image,
                 })
-            });
+            })
+            const response = await APICall.json();
+            return response;
         } else {
-            const response = await fetch('http://localhost:3001/api/auth/posts', {
+            const APICall = await fetch('http://localhost:3001/api/posts', {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + jwt
                 },
                 body: JSON.stringify({
-                    content: content,
+                    userId: userId,
+                    content: content
                 })
-            });
+            })
+            const response = await APICall.json();
+            return response;
         }
-       
-        console.log(response.json());
-        return response.json();
+
+
     } catch (error) {
         console.error(error);
     }

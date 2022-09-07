@@ -9,12 +9,13 @@ function FormNewPost() {
 
     async function createPost(data) {
         try {
-            const user = await createNewPost(data.content, data.image)
+            const user = await createNewPost(data.content, data.image);
         } catch (error) {
             console.error(error);
             return error
         }
     }
+
     return (
         <section id='login-form'>
 
@@ -25,8 +26,8 @@ function FormNewPost() {
                         placeholder="Quoi de neuf ?"
                         type="text"
                         autoComplete="on"
-                        {...register("message", { required: true })} />
-                    {errors.message && <p className="alert-msg">Merci de mettre un message</p>}
+                        {...register("content", { required: true })} />
+                    {errors.content && <p className="alert-msg">Merci de mettre un message</p>}
                 </div>
                 <div>
                     <input

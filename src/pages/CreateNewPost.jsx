@@ -1,13 +1,16 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 
 import FormNewPost from "../components/FormNewPost"
 
-function CreateNewPost (){
-    return (
-        <div>
+function CreateNewPost(props) {
+    const {isAuthed} = props;
+
+    return isAuthed ? (
+        <section>
             <FormNewPost />
-        </div>
-    )
+        </section>
+    ) : (<Navigate replace to={"/login"} />)
 };
 
 export default CreateNewPost;

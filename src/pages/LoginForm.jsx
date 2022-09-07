@@ -1,22 +1,25 @@
 import React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import '../styles/LoginForm.css';
-import loginUser from '../API/loginUser';
 
 function LoginForm(props) {
-        const {isAuthed} = props;
+
+        const {isAuthed, login} = props;
+
         const { register, handleSubmit, watch, formState: { errors } } = useForm();
-        async function onSubmit(data) {
+
+        const onSubmit = (data) => {
                 try {
-                        const user = await loginUser(data.email, data.password)
+                        login(data.email, data.password);
                 } catch (error) {
                         console.error(error);
                         return error
                 }
         }
+
         return !isAuthed ? (
                 <section id='login-form'>
                                 <form onSubmit={handleSubmit(onSubmit)} className='form'>
@@ -37,7 +40,9 @@ function LoginForm(props) {
                                                 {errors.password && <p className="alert-msg">Un mot de passe doit être renseigné !</p>}
                                         </div>
                                         <button>Connexion</button>
+                                        <p><Link to={"/signup"}> Pas encore de compte ?</Link></p>
                                 </form>
+                                
                 </section>
         ): (<Navigate replace to={"/"}/>)
 
