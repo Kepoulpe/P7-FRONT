@@ -1,23 +1,30 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 
 function CreateNewPost(props) {
 
     const { isAuthed, createNewPost } = props;
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate();
 
     const createPost = (data) => {
         try {
-            createNewPost(data.content, data.image);
+            const userId = localStorage.getItem('userId')
+            const formData = new FormData();
+            formData.append("imageUrl", data.file);
+            formData.append("content", data.content);
+            formData.append("userId", userId)
+            createNewPost(formData)
+            navigate("/", { replace: true });
         } catch (error) {
             console.error(error);
             return error
         }
     }
 
-    // presentational composent
+    // presentational component
     return isAuthed ? (
         <section id='login-form'>
             <form onSubmit={handleSubmit(createPost)} className='form'>
@@ -32,11 +39,11 @@ function CreateNewPost(props) {
                 </div>
                 <div>
                     <input
+                        id='fileInput'
                         placeholder="Image"
                         type="file"
-                        accept='image/*'
-                        autoComplete="on"
-                        {...register("image", { required: false })} />
+                        {...register("file", { required: true })} />
+                    {errors.file && <p className='alert-msg'>Merci de mettre une image</p>}
                 </div>
                 <button>CRÉER</button>
             </form>
