@@ -13,7 +13,7 @@ function CreateNewPost(props) {
         try {
             const userId = localStorage.getItem('userId')
             const formData = new FormData();
-            formData.append("imageUrl", data.file);
+            formData.append("imageUrl", data.imageUrl[0]);
             formData.append("content", data.content);
             formData.append("userId", userId)
             createNewPost(formData)
@@ -42,7 +42,7 @@ function CreateNewPost(props) {
                         id='fileInput'
                         placeholder="Image"
                         type="file"
-                        {...register("file", { required: true })} />
+                        {...register("imageUrl", { required: false })} />
                     {errors.file && <p className='alert-msg'>Merci de mettre une image</p>}
                 </div>
                 <button>CRÉER</button>

@@ -1,4 +1,4 @@
-import '../styles/Banner.css';
+import '../styles/components/Banner.css';
 import logo from '../assets/icon-left-font-monochrome-white.png';
 
 import React from 'react';

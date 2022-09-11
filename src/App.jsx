@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './styles/App.css';
+import './styles/pages/App.css';
 import { Routes, Route } from "react-router-dom";
 
 import Banner from './components/Banner';
@@ -9,6 +9,8 @@ import Home from './pages/Home';
 import CreateNewPost from './pages/CreateNewPost';
 import loginUser from './API/loginUser';
 import createNewPostAPI from './API/createNewPostAPI';
+import NotFoundPages from './pages/404';
+import EditPost from './pages/EditPost';
 
 // container components 
 function App() {
@@ -103,6 +105,8 @@ function App() {
           <Route path="login" element={<LoginForm isAuthed={isAuthed} login={login} />} />
           <Route path="signup" element={<SignupForm isAuthed={isAuthed} />} />
           <Route path="new-post" element={<CreateNewPost isAuthed={isAuthed} createNewPost={createNewPost} />} />
+          <Route path="edit/:postId" element={<EditPost isAuthed={isAuthed} createNewPost={createNewPost} />} />
+          <Route path="*" element={<NotFoundPages/>} />
           {/* TODO 404 */}
         </Routes>
       </div>

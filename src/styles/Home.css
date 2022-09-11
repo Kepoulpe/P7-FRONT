@@ -1,0 +1,34 @@
+.feed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.postCard {
+    width: 450px;
+    margin-bottom: 10px;
+}
+
+.img-postCard {
+    width: 100%;
+}
+
+.thumb-container {
+    display: flex;
+    width: 450px;
+    justify-content: flex-end;
+
+}
+
+.thumbs {
+    display: flex;
+    width: 40px;
+    margin-right: 5px;
+    align-items: center;
+}
+
+.thumb-icon {
+    width: 25px;
+    margin-right: 2px;
+    cursor: pointer;
+}
