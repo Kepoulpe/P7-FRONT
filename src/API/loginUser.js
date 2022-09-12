@@ -4,7 +4,7 @@
  * @param {string} password password of the user it should contain at least 8 characters and include letters, numbers and symbols
  * @returns 
  */
- export default async function loginUser(email, password) {
+ export default async function loginUser(email, password,) {
     try {
         // make the API call
         const APICall = await fetch('http://localhost:3001/api/auth/login', {
@@ -20,6 +20,7 @@
         const response = await APICall.json();
         localStorage.setItem('jwt', response.data.token);
         localStorage.setItem('userId', response.data.userId);
+        localStorage.setItem('userLoggedIn', JSON.stringify(response.data));
         return response;
     } catch (error) {
         console.error(error);

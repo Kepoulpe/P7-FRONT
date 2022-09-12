@@ -12,10 +12,13 @@ import createNewPostAPI from './API/createNewPostAPI';
 import NotFoundPages from './pages/404';
 import EditPost from './pages/EditPost';
 
+
 // container components 
 function App() {
 
   const [isAuthed, setIsAuthed] = useState(false);
+  const [userLoggedIn, setUserLoggedIn]= useState([])
+  const [canModify, setCanModify] = useState(false);
   const [postsData, setPostsData] = useState([]);
   const [APIError, setAPIError] = useState(false);
 
@@ -65,20 +68,28 @@ function App() {
     }
     return () => isAuthedEffect = false;
   }, [isAuthed]); // this useEffect hook will only be executed when `isAuthed` state variable changes
-
+  
   async function login(email, password) {
+    let user;
     try {
-      await loginUser(email, password);
+      user = await loginUser(email, password);
       setIsAuthed(true);
+      // TODO persit value of canModify to true when reload page
+      // if(user.isAdmin) {
+      //   setCanModify(true)
+      // }
+      return user;
     } catch (error) {
       console.error(error);
     }
   }
 
+
   function logOut() {
     try {
       localStorage.removeItem('jwt');
       localStorage.removeItem('userId');
+      localStorage.removeItem('userLoggedIn')
       setIsAuthed(false);
     } catch (error) {
       console.log(error);
@@ -87,10 +98,9 @@ function App() {
 
   async function createNewPost(formData) {
     try {
-      const newPostResponse= await createNewPostAPI(formData)
+      const newPostResponse = await createNewPostAPI(formData)
       // TODO make sure its sorted chronologically in descending order
-      console.log(newPostResponse);
-      setPostsData([...postsData, newPostResponse.data]);
+      setPostsData([newPostResponse.data, ...postsData]);
     } catch (error) {
       console.log(error);
     }
@@ -101,13 +111,12 @@ function App() {
       <Banner isAuthed={isAuthed} logOut={logOut} />
       <div className='gpm-form'>
         <Routes>
-          <Route path="/" element={<Home isAuthed={isAuthed} postsData={postsData} />} />
+          <Route path="/" element={<Home isAuthed={isAuthed} canModify={canModify} userLoggedIn={userLoggedIn} postsData={postsData} />} />
           <Route path="login" element={<LoginForm isAuthed={isAuthed} login={login} />} />
           <Route path="signup" element={<SignupForm isAuthed={isAuthed} />} />
           <Route path="new-post" element={<CreateNewPost isAuthed={isAuthed} createNewPost={createNewPost} />} />
-          <Route path="edit/:postId" element={<EditPost isAuthed={isAuthed} createNewPost={createNewPost} />} />
-          <Route path="*" element={<NotFoundPages/>} />
-          {/* TODO 404 */}
+          <Route path="edit/:postId" element={<EditPost isAuthed={isAuthed} />} />
+          <Route path="*" element={<NotFoundPages />} />
         </Routes>
       </div>
     </div>

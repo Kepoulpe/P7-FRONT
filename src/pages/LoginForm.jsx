@@ -9,7 +9,7 @@ function LoginForm(props) {
 
         const {isAuthed, login} = props;
 
-        const { register, handleSubmit, watch, formState: { errors } } = useForm();
+        const { register, handleSubmit, formState: { errors } } = useForm();
 
         const onSubmit = (data) => {
                 try {
