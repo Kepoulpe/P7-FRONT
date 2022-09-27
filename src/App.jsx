@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import CreateNewPost from './pages/CreateNewPost';
 import loginUser from './API/loginUser';
 import createNewPostAPI from './API/createNewPostAPI';
+// import getOneUserAPI from "./API/getOneUserAPI";
 import NotFoundPages from './pages/404';
 import EditPost from './pages/EditPost';
 
@@ -44,6 +45,18 @@ function App() {
     return () => isAuthedEffect = false;
   }, []);
 
+  // useEffect(() => {
+  //   let canModifyEffect = true;
+  //   const getOneUser = async () => {
+  //     const APICall = await getOneUserAPI();
+  //     if (canModifyEffect && APICall.data.isAdmin === true) {
+  //       setCanModify(true);
+  //     }
+  //     return () => canModifyEffect = false;
+  //   }
+  //   getOneUser();
+  // }, []);
+
   useEffect(() => {
     let isAuthedEffect = true;
     const jwt = localStorage.getItem("jwt");
@@ -74,11 +87,6 @@ function App() {
     try {
       user = await loginUser(email, password);
       setIsAuthed(true);
-      // TODO persit value of canModify to true when reload page
-      // if(user.isAdmin) {
-      //   setCanModify(true)
-      // }
-      return user;
     } catch (error) {
       console.error(error);
     }

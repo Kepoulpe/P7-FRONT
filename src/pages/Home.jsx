@@ -35,10 +35,6 @@ function Home(props) {
                                     <img alt="icon de pouce en l'air" src={thumbUp} className='thumb-icon'></img>
                                     <p>{data.likes}</p>
                                 </span>
-                                <span className='thumbs'>
-                                    <img alt="icon de pouce vers le bas" src={thumbDown} className='thumb-icon'></img>
-                                    <p>{data.dislikes}</p>
-                                </span>
                             </div>
                         </div>
                     )
@@ -54,11 +50,6 @@ function Home(props) {
                                     <img alt="icon de pouce en l'air" src={thumbUp} className='thumb-icon'></img>
                                     <p>{data.likes}</p>
                                 </span>
-                                <span className='thumbs'>
-                                    <img alt="icon de pouce vers le bas" src={thumbDown} className='thumb-icon'></img>
-                                    <p>{data.dislikes}</p>
-                                </span>
-
                             </div>
 
                         </div>
