@@ -2,7 +2,6 @@ const jwt = localStorage.getItem('jwt')
 /** Update without image
  * @param {string} postId id of the post liked or dislked by the user
  * @param {string} content content edited by the user
- * @param {number} like value for like dislike logic can be 1, -1 or 0
  * @returns 
  */
  export default async function updatePostNoImage (postId,content) {
@@ -25,9 +24,8 @@ const jwt = localStorage.getItem('jwt')
 };
 
 /** Update with image
- * @param {string} postId id of the post liked or dislked by the user
- * @param {string} content content edited by the user
- * @param {number} like value for like dislike logic can be 1, -1 or 0
+ * @param {formData} formData get from the update form if their is picture to update
+ * @param {string} postId content edited by the user
  * @returns 
  */
  export default async function updatePostWithImage (postId,formData) {
@@ -36,6 +34,7 @@ const jwt = localStorage.getItem('jwt')
         const response = await fetch(`http://localhost:3001/api/posts/${postId}`, {
             method: "PUT",
             headers: {
+                "Content-Type": "multipart/form-data",
                 "Authorization": "Bearer " + jwt,
             },
             body: formData

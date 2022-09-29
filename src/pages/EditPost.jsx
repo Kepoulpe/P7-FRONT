@@ -59,7 +59,6 @@ function EditPost(props) {
             id='fileInput'
             placeholder="Image"
             type="file"
-            defaultValue={postData.imageUrl}
             {...register("imageUrl", { required: false })} />
         </div>
         <button>Modifier</button>
