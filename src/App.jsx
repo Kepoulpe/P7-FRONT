@@ -9,9 +9,10 @@ import Home from './pages/Home';
 import CreateNewPost from './pages/CreateNewPost';
 import loginUser from './API/loginUser';
 import createNewPostAPI from './API/createNewPostAPI';
-// import getOneUserAPI from "./API/getOneUserAPI";
 import NotFoundPages from './pages/404';
 import EditPost from './pages/EditPost';
+import {updatePostNoImage,updatePostWithImage } from './API/updatePost';
+
 
 
 // container components 
@@ -123,7 +124,7 @@ function App() {
           <Route path="login" element={<LoginForm isAuthed={isAuthed} login={login} />} />
           <Route path="signup" element={<SignupForm isAuthed={isAuthed} />} />
           <Route path="new-post" element={<CreateNewPost isAuthed={isAuthed} createNewPost={createNewPost} />} />
-          <Route path="edit/:postId" element={<EditPost isAuthed={isAuthed} />} />
+          <Route path="edit/:postId" element={<EditPost isAuthed={isAuthed} updatePostNoImage={updatePostNoImage} updatePostWithImage={updatePostWithImage} />} />
           <Route path="*" element={<NotFoundPages />} />
         </Routes>
       </div>

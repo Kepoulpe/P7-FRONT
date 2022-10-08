@@ -4,7 +4,7 @@ const jwt = localStorage.getItem('jwt')
  * @param {string} content content edited by the user
  * @returns 
  */
- export default async function updatePostNoImage (postId,content) {
+ async function updatePostNoImage (postId,content) {
     try {
         // make the API call
         const response = await fetch(`http://localhost:3001/api/posts/${postId}`, {
@@ -28,7 +28,7 @@ const jwt = localStorage.getItem('jwt')
  * @param {string} postId content edited by the user
  * @returns 
  */
- export default async function updatePostWithImage (postId,formData) {
+async function updatePostWithImage (postId,formData) {
     try {
         // make the API call
         const response = await fetch(`http://localhost:3001/api/posts/${postId}`, {
@@ -44,3 +44,4 @@ const jwt = localStorage.getItem('jwt')
         console.error(error);
     }
 };
+export  {updatePostNoImage, updatePostWithImage};

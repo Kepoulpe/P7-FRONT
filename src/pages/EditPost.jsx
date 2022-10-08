@@ -10,22 +10,11 @@ import getOnePostAPI from '../API/getOnePost';
 function EditPost(props) {
 
   let params = useParams();
-  let post = [];
   const postId = params.postId;
-  const { isAuthed, postsData, canModify } = props;
+  const { isAuthed, postsData, canModify, updatePostNoImage, updatePostWithImage } = props;
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [postData, setPostData] = useState([]);
 
-  // async function getOnePost(postId) {
-  //   try {
-  //     const response = await getOnePostAPI(postId)
-  //     setPostData(response);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-  // getOnePost(postId);
-  // console.log(postData);
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -38,13 +27,33 @@ function EditPost(props) {
     if (isAuthed) {
       fetchPost();
     }
-  }, []); 
+  }, []);
 
-  console.log(postData.imageUrl);
+  const onSubmitModify = (data) => {
+    if (data.file !== undefined) {
+      try {
+        const formData = new FormData();
+        formData.append("imageUrl", data.imageUrl[0]);
+        formData.append("content", data.content);
+        updatePostWithImage(formData, postId)
+      } catch (error) {
+        console.log(error);
+        return error
+      }
+    } else {
+      try {
+        updatePostNoImage(data.content, postId);
+      } catch (error) {
+        console.error(error);
+        return error
+      }
+    }
+
+  }
 
   return isAuthed ? (
     <section id='login-form'>
-      <form onSubmit={" "} className='form'>
+      <form onSubmit={handleSubmit(onSubmitModify)} className='form'>
         <h1>Modifer le poste</h1>
         <div>
           <input
@@ -52,7 +61,7 @@ function EditPost(props) {
             type="text"
             autoComplete="on"
             defaultValue={postData.content}
-            {...register("content", { required: false})} />
+            {...register("content", { required: false })} />
         </div>
         <div>
           <input
