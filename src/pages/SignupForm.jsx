@@ -13,7 +13,6 @@ function SignupForm(props) {
         const [errorMessage, setErrorMessage] = useState(null);
         const {isAuthed} = props;
         const navigate = useNavigate();
-        // const [requestSending, setrequestSending] = useState(false)
 
 
         async function onSubmit(data) {

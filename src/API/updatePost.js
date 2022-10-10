@@ -7,7 +7,7 @@ const jwt = localStorage.getItem('jwt')
  async function updatePostNoImage (postId,content) {
     try {
         // make the API call
-        const response = await fetch(`http://localhost:3001/api/posts/${postId}`, {
+        const APIcall = await fetch(`http://localhost:3001/api/posts/${postId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -17,7 +17,8 @@ const jwt = localStorage.getItem('jwt')
                 content: content
             })
         });
-        return response.json();
+        const response = await APIcall.json();
+        return response
     } catch (error) {
         console.error(error);
     }
@@ -31,17 +32,35 @@ const jwt = localStorage.getItem('jwt')
 async function updatePostWithImage (postId,formData) {
     try {
         // make the API call
-        const response = await fetch(`http://localhost:3001/api/posts/${postId}`, {
+        const APICall = await fetch(`http://localhost:3001/api/posts/${postId}`, {
             method: "PUT",
             headers: {
-                "Content-Type": "multipart/form-data",
                 "Authorization": "Bearer " + jwt,
             },
             body: formData
         });
-        return response.json();
+        const response = await APICall.json();
+        return response
     } catch (error) {
         console.error(error);
     }
 };
+// export default async function createNewPostAPI(formData) {
+//     try {
+//         const jwt = localStorage.getItem('jwt');
+//         // make the API call 
+//         const APICall = await fetch('http://localhost:3001/api/posts', {
+//             method: "POST",
+//             headers: {
+//                 "Authorization": "Bearer " + jwt,
+//             },
+//             body: formData
+//         })
+//         const response = await APICall.json();
+//         return response;
+
+//     } catch (error) {
+//         console.error(error);
+//     }
+// };
 export  {updatePostNoImage, updatePostWithImage};
