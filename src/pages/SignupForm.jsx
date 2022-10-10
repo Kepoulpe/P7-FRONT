@@ -1,7 +1,7 @@
 import createUser from '../API/createUser';
 
 import React from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form'
 import '../styles/SignupForm.css';
@@ -12,6 +12,7 @@ function SignupForm(props) {
         const { register, handleSubmit, formState: { errors } } = useForm();
         const [errorMessage, setErrorMessage] = useState(null);
         const {isAuthed} = props;
+        const navigate = useNavigate();
         // const [requestSending, setrequestSending] = useState(false)
 
 
@@ -19,6 +20,7 @@ function SignupForm(props) {
                 try {
                         setErrorMessage(null)
                         await createUser(data.userName, data.email, data.password)
+                        navigate("/login", { replace: true });
                 } catch (error) {
                         setErrorMessage(error.msg)
                         console.error(error);
