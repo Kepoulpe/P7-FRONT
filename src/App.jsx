@@ -83,6 +83,11 @@ function App() {
     return () => isAuthedEffect = false;
   }, [isAuthed]); // this useEffect hook will only be executed when `isAuthed` state variable changes
   
+  const deletePostFromDisplay = (postId) => {
+    const postsDataMinusPost = postsData.filter(post => post._id != postId);
+    setPostsData(postsDataMinusPost);
+  }
+
   async function login(email, password) {
     let user;
     try {
@@ -124,7 +129,7 @@ function App() {
           <Route path="login" element={<LoginForm isAuthed={isAuthed} login={login} />} />
           <Route path="signup" element={<SignupForm isAuthed={isAuthed} />} />
           <Route path="new-post" element={<CreateNewPost isAuthed={isAuthed} createNewPost={createNewPost} />} />
-          <Route path="edit/:postId" element={<EditPost isAuthed={isAuthed} updatePostNoImage={updatePostNoImage} updatePostWithImage={updatePostWithImage} />} />
+          <Route path="edit/:postId" element={<EditPost isAuthed={isAuthed} updatePostNoImage={updatePostNoImage} updatePostWithImage={updatePostWithImage} deletePostFromDisplay={deletePostFromDisplay}/>} />
           <Route path="*" element={<NotFoundPages />} />
         </Routes>
       </div>

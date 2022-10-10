@@ -11,7 +11,15 @@ function EditPost(props) {
 
   let params = useParams();
   const postId = params.postId;
-  const { isAuthed, postsData, canModify,updatePostNoImage, updatePostWithImage } = props;
+  const userId = localStorage.getItem('userId')
+  const { 
+    isAuthed, 
+    postsData, 
+    canModify,
+    updatePostNoImage, 
+    updatePostWithImage, 
+    deletePostFromDisplay 
+  } = props;
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [postData, setPostData] = useState([]);
@@ -54,9 +62,10 @@ function EditPost(props) {
     }
   }
 
-  const deleteOnePost = () => {
+  const deleteOnePost = async () => {
     try {
-      deleteOnePostAPI(postId)
+      await deleteOnePostAPI(postId);
+      deletePostFromDisplay(postId);
       navigate("/", { replace: true });
     } catch (error) {
       console.log(error);
