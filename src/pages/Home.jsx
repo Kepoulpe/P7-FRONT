@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-
+import jwt_decode from 'jwt-decode';
 // import like from '../API/likeDislike'
 
 import EditButton from '../components/EditButton';
@@ -11,18 +11,29 @@ import thumbDown from '../assets/thumb-down.png';
 
 import '../styles/Home.css'
 
-function Home(props) {
 
-    const { isAuthed, postsData, canModify} = props;
+function Home(props) {
+    const { isAuthed, postsData} = props;
     const userId = localStorage.getItem('userId');
-    const user = JSON.parse(localStorage.getItem('userLoggedIn'));
+    const token = localStorage.getItem('jwt');
+    let canModify = false
+    try {
+        const decoded = jwt_decode(token);
+        if (decoded.isAdmin === true) {
+            canModify = true
+        }
+    } catch (error) {
+        console.log(error);
+    };
+   
+    
   
 
 
     return isAuthed ? (
         <section className='feed'>
             {postsData.length > 0 ? postsData.map((data, id) => {
-                if (userId === data.userId || user.isAdmin === true) {
+                if (userId === data.userId || canModify === true) {
                     return (
                         <div key={id} className='postCard'>
                             <div>

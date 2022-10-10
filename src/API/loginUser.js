@@ -20,7 +20,6 @@
         const response = await APICall.json();
         localStorage.setItem('jwt', response.data.token);
         localStorage.setItem('userId', response.data.userId);
-        localStorage.setItem('userLoggedIn', JSON.stringify(response.data));
         return response;
     } catch (error) {
         console.error(error);
