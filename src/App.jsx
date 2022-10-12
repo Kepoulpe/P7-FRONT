@@ -19,10 +19,8 @@ import {updatePostNoImage,updatePostWithImage } from './API/updatePost';
 function App() {
 
   const [isAuthed, setIsAuthed] = useState(false);
-  const [userLoggedIn, setUserLoggedIn]= useState([])
   const [canModify, setCanModify] = useState(false);
   const [postsData, setPostsData] = useState([]);
-  const [APIError, setAPIError] = useState(false);
 
   useEffect(() => {
     let isAuthedEffect = true;
@@ -46,17 +44,6 @@ function App() {
     return () => isAuthedEffect = false;
   }, []);
 
-  // useEffect(() => {
-  //   let canModifyEffect = true;
-  //   const getOneUser = async () => {
-  //     const APICall = await getOneUserAPI();
-  //     if (canModifyEffect && APICall.data.isAdmin === true) {
-  //       setCanModify(true);
-  //     }
-  //     return () => canModifyEffect = false;
-  //   }
-  //   getOneUser();
-  // }, []);
 
   useEffect(() => {
     let isAuthedEffect = true;
@@ -74,7 +61,6 @@ function App() {
         setPostsData(res.data);
       } catch (error) {
         console.log(error);
-        setAPIError(true);
       }
     }
     if (isAuthed) {
@@ -92,9 +78,18 @@ function App() {
     let user;
     try {
       user = await loginUser(email, password);
-      setIsAuthed(true);
+      console.log(user);
+      if (user.success === true){
+        localStorage.setItem('jwt', user.data.token);
+        localStorage.setItem('userId', user.data.userId);
+        setIsAuthed(true);
+      }else {
+        window.alert(user.msg)
+        setIsAuthed(false)
+      }
     } catch (error) {
-      console.error(error);
+      setIsAuthed(false)
+      return;
     }
   }
 
@@ -103,7 +98,6 @@ function App() {
     try {
       localStorage.removeItem('jwt');
       localStorage.removeItem('userId');
-      localStorage.removeItem('userLoggedIn')
       setIsAuthed(false);
     } catch (error) {
       console.log(error);
@@ -125,7 +119,7 @@ function App() {
       <Banner isAuthed={isAuthed} logOut={logOut} />
       <div className='gpm-form'>
         <Routes>
-          <Route path="/" element={<Home isAuthed={isAuthed} canModify={canModify} userLoggedIn={userLoggedIn} postsData={postsData} />} />
+          <Route path="/" element={<Home isAuthed={isAuthed} canModify={canModify} postsData={postsData} />} />
           <Route path="login" element={<LoginForm isAuthed={isAuthed} login={login} />} />
           <Route path="signup" element={<SignupForm isAuthed={isAuthed} />} />
           <Route path="new-post" element={<CreateNewPost isAuthed={isAuthed} createNewPost={createNewPost} />} />
