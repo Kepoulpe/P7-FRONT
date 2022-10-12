@@ -18,11 +18,9 @@
             })
         });
         const response = await APICall.json();
-        localStorage.setItem('jwt', response.data.token);
-        localStorage.setItem('userId', response.data.userId);
         return response;
     } catch (error) {
         console.error(error);
-        return false;
+        return;
     }
 };

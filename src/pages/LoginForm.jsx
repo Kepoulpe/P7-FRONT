@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import '../styles/LoginForm.css';
 
@@ -10,13 +10,15 @@ function LoginForm(props) {
         const {isAuthed, login} = props;
 
         const { register, handleSubmit, formState: { errors } } = useForm();
+        const navigate = useNavigate();
 
         const onSubmit = (data) => {
                 try {
                         login(data.email, data.password);
                 } catch (error) {
-                        console.error(error);
-                        return error
+                        navigate("/login", { replace: true });
+                        console.error("error from login form jsx");
+                        return;
                 }
         }
 
