@@ -10,18 +10,21 @@ import '../styles/SignupForm.css';
 
 function SignupForm(props) {
         const { register, handleSubmit, formState: { errors } } = useForm();
-        const [errorMessage, setErrorMessage] = useState(null);
-        const {isAuthed} = props;
+        const { isAuthed } = props;
+        const [responseMessage, setResponseMessage] = useState([]);
         const navigate = useNavigate();
 
 
         async function onSubmit(data) {
+                let response;
                 try {
-                        setErrorMessage(null)
-                        await createUser(data.userName, data.email, data.password)
-                        navigate("/login", { replace: true });
+                        response = await createUser(data.userName, data.email, data.password)
+                        if (response.success === true) {
+                                navigate("/login", { replace: true });
+                        } else {
+                                setResponseMessage(response.errors[0].msg)
+                        }
                 } catch (error) {
-                        setErrorMessage(error.msg)
                         console.error(error);
                 }
         }
@@ -54,11 +57,10 @@ function SignupForm(props) {
                                 </div>
                                 <button>Créer mon compte</button>
                                 <p><Link to={"/login"}> Déja un compte ?</Link></p>
+                                {(responseMessage) && <div><p>{responseMessage}</p></div>}
                         </form>
-                        {(errorMessage) && <div><p>{errorMessage}</p></div>}
-
                 </section>
-        ): (<Navigate replace to={"/"} />)
+        ) : (<Navigate replace to={"/"} />)
 }
 
 
