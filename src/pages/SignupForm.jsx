@@ -25,6 +25,7 @@ function SignupForm(props) {
                                 setResponseMessage(response.errors[0].msg)
                         }
                 } catch (error) {
+                        window.alert("Une erreur est survenue merci d'essayer ultérieurement")
                         console.error(error);
                 }
         }
