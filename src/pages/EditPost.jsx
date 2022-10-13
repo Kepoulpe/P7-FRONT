@@ -11,17 +11,14 @@ function EditPost(props) {
 
   let params = useParams();
   const postId = params.postId;
-  const userId = localStorage.getItem('userId')
   const { 
     isAuthed, 
-    postsData, 
-    canModify,
     updatePostNoImage, 
     updatePostWithImage, 
     deletePostFromDisplay 
   } = props;
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit } = useForm();
   const [postData, setPostData] = useState([]);
 
   useEffect(() => {
@@ -48,6 +45,7 @@ function EditPost(props) {
         updatePostWithImage(postId, formData);
         navigate("/", { replace: true });
       } catch (error) {
+        window.alert("Une erreur est survenue merci d'essayer ultérieurement")
         console.log(error);
         return error
       }
@@ -56,6 +54,7 @@ function EditPost(props) {
         updatePostNoImage(postId, data.content);
         navigate("/", { replace: true });
       } catch (error) {
+        window.alert("Une erreur est survenue merci d'essayer ultérieurement")
         console.error(error);
         return error
       }
@@ -68,6 +67,7 @@ function EditPost(props) {
       deletePostFromDisplay(postId);
       navigate("/", { replace: true });
     } catch (error) {
+      window.alert("Une erreur est survenue merci d'essayer ultérieurement")
       console.log(error);
     }
   }
