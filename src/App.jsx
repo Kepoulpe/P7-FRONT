@@ -11,7 +11,8 @@ import loginUser from './API/loginUser';
 import createNewPostAPI from './API/createNewPostAPI';
 import NotFoundPages from './pages/404';
 import EditPost from './pages/EditPost';
-import {updatePostNoImage,updatePostWithImage } from './API/updatePost';
+import { updatePostNoImage, updatePostWithImage } from './API/updatePost';
+
 
 
 
@@ -21,6 +22,8 @@ function App() {
   const [isAuthed, setIsAuthed] = useState(false);
   const [canModify, setCanModify] = useState(false);
   const [postsData, setPostsData] = useState([]);
+
+
 
   useEffect(() => {
     let isAuthedEffect = true;
@@ -68,9 +71,9 @@ function App() {
     }
     return () => isAuthedEffect = false;
   }, [isAuthed]); // this useEffect hook will only be executed when `isAuthed` state variable changes
-  
+
   const deletePostFromDisplay = (postId) => {
-    const postsDataMinusPost = postsData.filter(post => post._id != postId);
+    const postsDataMinusPost = postsData.filter(post => post._id !== postId);
     setPostsData(postsDataMinusPost);
   }
 
@@ -78,16 +81,16 @@ function App() {
     let user;
     try {
       user = await loginUser(email, password);
-      console.log(user);
-      if (user.success === true){
+      if (user.success === true) {
         localStorage.setItem('jwt', user.data.token);
         localStorage.setItem('userId', user.data.userId);
         setIsAuthed(true);
-      }else {
+      } else {
         window.alert(user.msg)
         setIsAuthed(false)
       }
     } catch (error) {
+      window.alert("Une erreur est survenue merci d'essayer ultérieurement")
       setIsAuthed(false)
       return;
     }
@@ -107,12 +110,18 @@ function App() {
   async function createNewPost(formData) {
     try {
       const newPostResponse = await createNewPostAPI(formData)
-      // TODO make sure its sorted chronologically in descending order
       setPostsData([newPostResponse.data, ...postsData]);
     } catch (error) {
+      window.alert("Une erreur est survenue merci d'essayer ultérieurement")
       console.log(error);
     }
   }
+  
+
+
+
+
+
 
   return (
     <div>
@@ -123,7 +132,7 @@ function App() {
           <Route path="login" element={<LoginForm isAuthed={isAuthed} login={login} />} />
           <Route path="signup" element={<SignupForm isAuthed={isAuthed} />} />
           <Route path="new-post" element={<CreateNewPost isAuthed={isAuthed} createNewPost={createNewPost} />} />
-          <Route path="edit/:postId" element={<EditPost isAuthed={isAuthed} updatePostNoImage={updatePostNoImage} updatePostWithImage={updatePostWithImage} deletePostFromDisplay={deletePostFromDisplay}/>} />
+          <Route path="edit/:postId" element={<EditPost isAuthed={isAuthed} updatePostNoImage={updatePostNoImage} updatePostWithImage={updatePostWithImage} deletePostFromDisplay={deletePostFromDisplay} />} />
           <Route path="*" element={<NotFoundPages />} />
         </Routes>
       </div>
