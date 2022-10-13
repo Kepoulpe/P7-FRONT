@@ -42,8 +42,8 @@ function CreateNewPost(props) {
                         id='fileInput'
                         placeholder="Image"
                         type="file"
-                        {...register("imageUrl", { required: false })} />
-                    {errors.file && <p className='alert-msg'>Merci de mettre une image</p>}
+                        {...register("imageUrl", { required: true })} />
+                    {errors.imageUrl && <p className='alert-msg'>Merci de mettre une image</p>}
                 </div>
                 <button>CRÉER</button>
             </form>
