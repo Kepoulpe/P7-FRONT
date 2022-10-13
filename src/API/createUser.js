@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+
 /**
  * @param {string} email email of the user
  * @param {string} userName user name of the user
