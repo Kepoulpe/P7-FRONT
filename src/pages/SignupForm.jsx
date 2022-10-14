@@ -31,8 +31,8 @@ function SignupForm(props) {
         }
         return !isAuthed ? (
                 <section id='signup-form'>
-                        <form onSubmit={handleSubmit(onSubmit)} className='signup-form'>
-                                <div className="flex flex-col">
+                        <form onSubmit={handleSubmit(onSubmit)} className='form'>
+                                <div className='input-container'>
                                         <input
                                                 placeholder="Nom d'utilisateur"
                                                 type="text"
@@ -40,7 +40,7 @@ function SignupForm(props) {
                                                 {...register("userName", { required: true })} />
                                         {errors.userName && <p className="alert-msg">Le nom d'utilisateur doit être renseigné !</p>}
                                 </div>
-                                <div>
+                                <div className='input-container'>
                                         <input
                                                 placeholder="Email"
                                                 type="email"
@@ -48,7 +48,7 @@ function SignupForm(props) {
                                                 {...register("email", { required: true })} />
                                         {errors.email && <p className="alert-msg">Une adresse email doit être renseigné !</p>}
                                 </div>
-                                <div>
+                                <div className='input-container'>
                                         <input
                                                 placeholder="Mot de passe"
                                                 type="password"
@@ -56,7 +56,7 @@ function SignupForm(props) {
                                                 {...register("password", { required: true })} />
                                         {errors.password && <p className="alert-msg">Un mot de passe doit être renseigné !</p>}
                                 </div>
-                                <button>Créer mon compte</button>
+                                <button className='button'>Créer mon compte</button>
                                 <p><Link to={"/login"}> Déja un compte ?</Link></p>
                                 {(responseMessage) && <div><p>{responseMessage}</p></div>}
                         </form>

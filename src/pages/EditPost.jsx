@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import deleteOnePostAPI from '../API/deleteOnePost';
 import getOnePostAPI from '../API/getOnePost';
 
+import '../styles/pages/EditPost.css'
+
 
 
 function EditPost(props) {
@@ -76,7 +78,7 @@ function EditPost(props) {
     <section id='login-form'>
       <form onSubmit={handleSubmit(onSubmitModify)} className='form'>
         <h1>Modifer le poste</h1>
-        <div>
+        <div className='input-container'>
           <input
             placeholder={postData.content}
             type="text"
@@ -84,15 +86,15 @@ function EditPost(props) {
             defaultValue={postData.content}
             {...register("content", { required: false })} />
         </div>
-        <div>
+        <div className='input-container'>
           <input
             id='fileInput'
             placeholder="Image"
             type="file"
             {...register("imageUrl", { required: false })} />
         </div>
-        <button>Modifier</button>
-        <p onClick={deleteOnePost}>Supprimer le poste</p>
+        <button className='button'>Modifier</button>
+        <p onClick={deleteOnePost} className='delete'>Supprimer le poste</p>
       </form>
     </section>
   ) : (<Navigate replace to={"/login"} />)

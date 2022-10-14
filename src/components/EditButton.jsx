@@ -10,7 +10,7 @@ function EditButton(props) {
 
     const { postId } = props;
     return(
-        <Link to={`edit/${postId}`}><img src={edit} alt='edit icon' className='edit-icon' /></Link>
+        <Link to={`/edit/${postId}`}><img src={edit} alt='edit icon' className='edit-icon' /></Link>
     )
         
 }

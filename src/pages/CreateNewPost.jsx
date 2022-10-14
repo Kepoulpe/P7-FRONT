@@ -2,6 +2,8 @@ import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
+import '../styles/pages/CreateNewPost.css'
+
 
 function CreateNewPost(props) {
 
@@ -26,10 +28,10 @@ function CreateNewPost(props) {
 
     // presentational component
     return isAuthed ? (
-        <section id='login-form'>
-            <form onSubmit={handleSubmit(createPost)} className='form'>
+        <section>
+            <form onSubmit={handleSubmit(createPost)} className='form-edit'>
                 <h1>Créer votre publication </h1>
-                <div>
+                <div className='input-container'>
                     <input
                         placeholder="Quoi de neuf ?"
                         type="text"
@@ -45,7 +47,7 @@ function CreateNewPost(props) {
                         {...register("imageUrl", { required: true })} />
                     {errors.imageUrl && <p className='alert-msg'>Merci de mettre une image</p>}
                 </div>
-                <button>CRÉER</button>
+                <button className='button'>CRÉER</button>
             </form>
         </section>
     ) : (<Navigate replace to={"/login"} />)

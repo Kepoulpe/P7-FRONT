@@ -1,4 +1,4 @@
- .form {
+.form-edit {
     font-family: 'Lato', sans-serif;
     display: flex;
     flex-direction: column;
@@ -15,8 +15,12 @@
     transform: translate(-50%, -50%);
     box-shadow: 8px 8px 2px 1px #FFD7D7;
  }
+ h1 {
+   text-align: center;
+ }
  .input-container {
-   width: 80%;
+   width: 100%;
+   max-width: 320px;
  }
  input {
     font-family: 'Lato', sans-serif;
@@ -28,21 +32,16 @@
  }
 
  .button {
-   font-family: 'Lato', sans-serif;
-   cursor: pointer;
-   color: #fff;
-   font-size: 12px;
-   text-transform: uppercase;
-   width: 25%;
-   min-width: 150px;
-   border: 0;
-   margin-top: 10px;
-   margin-left: -5px;
-   border-radius: 5px;
-   background-color: #FD2D01;
-}
-
-
- /* .link-signup {
-   font-family: 'Lato', sans-serif;
- } */
+    font-family: 'Lato', sans-serif;
+    cursor: pointer;
+    color: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    width: 25%;
+    min-width: 150px;
+    border: 0;
+    margin-top: 10px;
+    margin-left: -5px;
+    border-radius: 5px;
+    background-color: #FD2D01;
+ }

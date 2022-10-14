@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 
@@ -25,7 +24,7 @@ function LoginForm(props) {
         return !isAuthed ? (
                 <section id='login-form'>
                                 <form onSubmit={handleSubmit(onSubmit)} className='form'>
-                                        <div>
+                                        <div    className='input-container'>
                                                 <input
                                                         placeholder="Email"
                                                         type="email"
@@ -33,7 +32,7 @@ function LoginForm(props) {
                                                         {...register("email", { required: true })} />
                                                 {errors.email && <p className="alert-msg">Une adresse email doit être renseigné !</p>}
                                         </div>
-                                        <div>
+                                        <div className='input-container'>
                                                 <input
                                                         placeholder="Mot de passe"
                                                         type="password"
@@ -41,8 +40,8 @@ function LoginForm(props) {
                                                         {...register("password", { required: true })} />
                                                 {errors.password && <p className="alert-msg">Un mot de passe doit être renseigné !</p>}
                                         </div>
-                                        <button>Connexion</button>
-                                        <p><Link to={"/signup"}> Pas encore de compte ?</Link></p>
+                                        <button className="button">Connexion</button>
+                                        <p className='link-signup'><Link to={"/signup"}> Pas encore de compte ?</Link></p>
                                 </form>
                                 
                 </section>

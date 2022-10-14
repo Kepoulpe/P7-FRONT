@@ -7,11 +7,13 @@ import LoginForm from './pages/LoginForm';
 import SignupForm from './pages/SignupForm';
 import Home from './pages/Home';
 import CreateNewPost from './pages/CreateNewPost';
+import Post from './pages/Post';
 import loginUser from './API/loginUser';
 import createNewPostAPI from './API/createNewPostAPI';
 import NotFoundPages from './pages/404';
 import EditPost from './pages/EditPost';
 import { updatePostNoImage, updatePostWithImage } from './API/updatePost';
+import getOnePostAPI from './API/getOnePost';
 
 
 
@@ -20,7 +22,6 @@ import { updatePostNoImage, updatePostWithImage } from './API/updatePost';
 function App() {
 
   const [isAuthed, setIsAuthed] = useState(false);
-  const [canModify, setCanModify] = useState(false);
   const [postsData, setPostsData] = useState([]);
 
 
@@ -116,6 +117,15 @@ function App() {
       console.log(error);
     }
   }
+
+  function updatePostLikes(postId) {
+    try {
+      getOnePostAPI(postId)
+    } catch (error) {
+      window.alert("Une erreur est survenue merci d'essayer ultérieurement")
+      console.log(error);
+    }
+  }
   
 
 
@@ -128,11 +138,12 @@ function App() {
       <Banner isAuthed={isAuthed} logOut={logOut} />
       <div className='gpm-form'>
         <Routes>
-          <Route path="/" element={<Home isAuthed={isAuthed} canModify={canModify} postsData={postsData} />} />
+          <Route path="/" element={<Home isAuthed={isAuthed} postsData={postsData} updatePostLikes={updatePostLikes}/>} />
           <Route path="login" element={<LoginForm isAuthed={isAuthed} login={login} />} />
           <Route path="signup" element={<SignupForm isAuthed={isAuthed} />} />
           <Route path="new-post" element={<CreateNewPost isAuthed={isAuthed} createNewPost={createNewPost} />} />
           <Route path="edit/:postId" element={<EditPost isAuthed={isAuthed} updatePostNoImage={updatePostNoImage} updatePostWithImage={updatePostWithImage} deletePostFromDisplay={deletePostFromDisplay} />} />
+          <Route path="post/:postId" element={<Post isAuthed={isAuthed} updatePostLikes={updatePostLikes} postsData={postsData}/>} />
           <Route path="*" element={<NotFoundPages />} />
         </Routes>
       </div>
