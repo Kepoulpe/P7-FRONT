@@ -13,11 +13,11 @@ function EditPost(props) {
 
   let params = useParams();
   const postId = params.postId;
-  const { 
-    isAuthed, 
-    updatePostNoImage, 
-    updatePostWithImage, 
-    deletePostFromDisplay 
+  const {
+    isAuthed,
+    updatePostNoImage,
+    updatePostWithImage,
+    deletePostFromDisplay
   } = props;
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
@@ -37,15 +37,16 @@ function EditPost(props) {
     }
   }, []);
 
-  const onSubmitModify = (data) => {
-    console.log(data.imageUrl.length);
-    if (data.imageUrl.length > 0 ) {
+  const onSubmitModify = async (data) => {
+    if (data.imageUrl.length > 0) {
       try {
         const formData = new FormData();
         formData.append("imageUrl", data.imageUrl[0]);
         formData.append("content", data.content);
-        updatePostWithImage(postId, formData);
-        navigate("/", { replace: true });
+        const response = await updatePostWithImage(postId, formData);
+         if (response.success === true) {
+          navigate("/", { replace: true });
+         }
       } catch (error) {
         window.alert("Une erreur est survenue merci d'essayer ultérieurement")
         console.log(error);
@@ -53,8 +54,11 @@ function EditPost(props) {
       }
     } else {
       try {
-        updatePostNoImage(postId, data.content);
-        navigate("/", { replace: true });
+        const content = data.content
+        const response = await updatePostNoImage(postId, content);
+        if (response.success === true) {
+          navigate("/", { replace: true });
+         }
       } catch (error) {
         window.alert("Une erreur est survenue merci d'essayer ultérieurement")
         console.error(error);

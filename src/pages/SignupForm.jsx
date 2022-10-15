@@ -4,7 +4,7 @@ import React from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form'
-import '../styles/SignupForm.css';
+import '../styles/pages/SignupForm.css';
 
 
 

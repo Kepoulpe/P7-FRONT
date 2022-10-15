@@ -12,7 +12,7 @@ import loginUser from './API/loginUser';
 import createNewPostAPI from './API/createNewPostAPI';
 import NotFoundPages from './pages/404';
 import EditPost from './pages/EditPost';
-import { updatePostNoImage, updatePostWithImage } from './API/updatePost';
+import { updatePostNoImageAPI, updatePostWithImageAPI } from './API/updatePost';
 import getOnePostAPI from './API/getOnePost';
 
 
@@ -50,7 +50,6 @@ function App() {
 
 
   useEffect(() => {
-    let isAuthedEffect = true;
     const jwt = localStorage.getItem("jwt");
     const fetchPosts = async () => {
       try {
@@ -70,8 +69,8 @@ function App() {
     if (isAuthed) {
       fetchPosts();
     }
-    return () => isAuthedEffect = false;
-  }, [isAuthed]); // this useEffect hook will only be executed when `isAuthed` state variable changes
+    return 
+  }, [isAuthed, postsData]); // this useEffect hook will only be executed when `isAuthed` state variable changes
 
   const deletePostFromDisplay = (postId) => {
     const postsDataMinusPost = postsData.filter(post => post._id !== postId);
@@ -118,6 +117,27 @@ function App() {
     }
   }
 
+  async function updatePostWithImage(postId, formData) {
+    try {
+      const updatedPostResponse = await updatePostWithImageAPI(postId, formData)
+      return updatedPostResponse;
+    } catch (error) {
+      window.alert("Une erreur est survenue merci d'essayer ultérieurement")
+      console.log(error);
+    }
+  }
+
+  async function updatePostNoImage(postId, content) {
+    try {
+      const updatedPostResponse = await updatePostNoImageAPI(postId, content)
+      return updatedPostResponse;
+    } catch (error) {
+      window.alert("Une erreur est survenue merci d'essayer ultérieurement")
+      console.log(error);
+    }
+  }
+
+  // async function updatePost ()
   function updatePostLikes(postId) {
     try {
       getOnePostAPI(postId)

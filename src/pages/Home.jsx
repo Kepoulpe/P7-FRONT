@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Link } from 'react-router-dom';
 
-import '../styles/Home.css'
+import '../styles/pages/Home.css'
 
 
 function Home(props) {
@@ -15,7 +15,7 @@ function Home(props) {
                         <div key={id} className='postCard'>
                             <Link to={`post/${data._id}`} className='post-card-link'>
                             <div>
-                                <img alt="image de la publication" src={data.imageUrl} className='img-postCard'></img>
+                                <img alt="publication" src={data.imageUrl} className='img-postCard'></img>
                             </div>
                             <div>
                                 <p className='content-postCard'>{data.content}</p>

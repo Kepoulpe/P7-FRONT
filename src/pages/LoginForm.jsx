@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 
-import '../styles/LoginForm.css';
+import '../styles/pages/LoginForm.css';
 
 function LoginForm(props) {
 
