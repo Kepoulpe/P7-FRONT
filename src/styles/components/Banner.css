@@ -8,7 +8,8 @@
 }
 
 .gpm-logo {
-	height: 100%;
+	height: auto;
+	width: 200px;
 }
 
 .gpm-banner-authed {
@@ -31,6 +32,10 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background-color: #FD2D01;
+	border-radius: 5px;
+	border: 0;
+	cursor: pointer;
 }
 
 .nav-icon {
