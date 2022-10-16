@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import getOnePostAPI from '../API/getOnePost';
 import EditButton from '../components/EditButton';
@@ -60,16 +60,18 @@ function Post(props) {
             </section>
         ) : (<Navigate replace to={"/login"} />)
     } else {
-        return isAuthed? (
-            <div className='postCard'>
-                <div>
-                    <img alt="publication" src={postData.imageUrl} className='img-postCard'></img>
+        return isAuthed ? (
+            <section className='feed'>
+                <div className='postCard'>
+                    <div>
+                        <img alt="publication" src={postData.imageUrl} className='img-postCard'></img>
+                    </div>
+                    <p className='content-postCard'>{postData.content}</p>
+                    <div>
+                        <LikeButton postId={postData._id} likes={postData.likes} />
+                    </div>
                 </div>
-                <p className='content-postCard'>{postData.content}</p>
-                <div>
-                    <LikeButton postId={postData._id} likes={postData.likes} />
-                </div>
-            </div>
+            </section>
         ) : (<Navigate replace to={"/login"} />)
     }
 
