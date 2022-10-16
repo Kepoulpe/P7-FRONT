@@ -16,8 +16,7 @@ function EditPost(props) {
   const {
     isAuthed,
     updatePostNoImage,
-    updatePostWithImage,
-    deletePostFromDisplay
+    updatePostWithImage
   } = props;
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
@@ -67,10 +66,9 @@ function EditPost(props) {
     }
   }
 
-  const deleteOnePost = async () => {
+  const deleteOnePost = () => {
     try {
-      await deleteOnePostAPI(postId);
-      deletePostFromDisplay(postId);
+      deleteOnePostAPI(postId);
       navigate("/", { replace: true });
     } catch (error) {
       window.alert("Une erreur est survenue merci d'essayer ultérieurement")
